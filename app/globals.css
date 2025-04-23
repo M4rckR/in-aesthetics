@@ -2,11 +2,25 @@
 
 
 @theme {
+  /* Fuentes */
   --font-in-playfair: var(--font-in-playfair);
   --font-in-poppins: var(--font-in-poppins);
+
+  /* <Colores */
+  --color-in-pink: #FFECE3;
+  --color-in-title-base: #2C2C2C;
+  --color-in-brown: #762B06;
 }
 
 
 body {
   @apply font-in-poppins
+}
+
+h1, h2, h3, h4, h5 {
+  @apply text-in-title-base
+}
+
+p {
+  @apply text-in-brown
 }

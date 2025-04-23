@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Playfair_Display, Poppins } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header/Header";
+import { Footer } from "@/components/footer/Footer";
+import { ButtonWsp } from "@/components/ui/buttonWsp/ButtonWsp";
 
 const playfair = Playfair_Display({
   variable: "--font-in-playfair",
@@ -27,12 +29,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="es" className="h-full">
       <body
-        className={`${poppins.variable} ${playfair.variable} antialiased`}
-      >
+        className={`${poppins.variable} ${playfair.variable} antialiased flex flex-col min-h-screen`}
+      > 
+        <ButtonWsp/>
         <Header/>
         {children}
+        <Footer/>
       </body>
     </html>
   );

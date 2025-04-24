@@ -7,7 +7,7 @@ export const Footer = () => {
     <footer 
         className='bg-in-pink py-14 rounded-tl-[48px] rounded-tr-[48px] md:rounded-tl-[58px] md:rounded-tr-[58px]'
         >
-        <div className='container max-w-[1440px] mx-auto px-4 space-y-8'>
+        <div className='container max-w-[1200px] mx-auto px-4 space-y-8'>
             <div className='flex flex-col md:flex-row gap-8'>
                 <div className='space-y-4 flex flex-col items-center md:items-start'> 
                     <Image

@@ -5,7 +5,8 @@ import { Playfair_Display, Poppins } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
-import { ButtonWsp } from "@/components/ui/buttonWsp/ButtonWsp";
+import { ButtonWsp } from "@/components/ui/buttonWsp/ButtonWsp"; 
+import 'swiper/css';
 
 
 const playfair = Playfair_Display({

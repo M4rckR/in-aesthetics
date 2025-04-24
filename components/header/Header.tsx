@@ -4,7 +4,7 @@ import { Socialbar } from "../socialBar/Socialbar"
 export const Header = () => {
   return (
     <div>
-        <header className="max-w-[1440px] mx-auto container py-4 px-4">
+        <header className="max-w-[1200px] mx-auto container py-4 px-4">
             <div className="flex items-center justify-between">
                 <Image 
                     priority 

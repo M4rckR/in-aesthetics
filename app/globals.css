@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-
 @theme {
   /* Fuentes */
   --font-in-playfair: var(--font-in-playfair);
@@ -12,15 +11,30 @@
   --color-in-brown: #762B06;
 }
 
+::-webkit-scrollbar {
+  display: none;
+  scrollbar-width: none
+}
+
+* {
+  scrollbar-width: none;     /* Firefox */
+}
+
+@keyframes suave-latido {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.animate-suave-latido {
+  animation: suave-latido 2.5s ease-in-out infinite;
+}
+
 
 body {
   @apply font-in-poppins
 }
 
-h1, h2, h3, h4, h5 {
-  @apply text-in-title-base
-}
-
-p {
-  @apply text-in-brown
-}

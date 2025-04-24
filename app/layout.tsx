@@ -1,9 +1,12 @@
+// app/layout.tsx
+
 import type { Metadata } from "next";
 import { Playfair_Display, Poppins } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
 import { ButtonWsp } from "@/components/ui/buttonWsp/ButtonWsp";
+
 
 const playfair = Playfair_Display({
   variable: "--font-in-playfair",
@@ -15,8 +18,6 @@ const poppins = Poppins({
   subsets: ["latin"],
   weight: ["500", "400"]
 });
-
-
 
 export const metadata: Metadata = {
   title: "Inaesthetics | Estética Natural y Bienestar en Lima",
@@ -32,11 +33,11 @@ export default function RootLayout({
     <html lang="es" className="h-full">
       <body
         className={`${poppins.variable} ${playfair.variable} antialiased flex flex-col min-h-screen`}
-      > 
-        <ButtonWsp/>
-        <Header/>
-        {children}
-        <Footer/>
+      >
+          <ButtonWsp />
+          <Header />
+          {children}
+          <Footer />
       </body>
     </html>
   );

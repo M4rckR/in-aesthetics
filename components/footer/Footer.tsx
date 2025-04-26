@@ -17,10 +17,10 @@ export const Footer = () => {
                     height={48}
                     /> 
                     <h3 
-                        className='text-center md:text-left font-in-playfair text-2xl md:text-3xl lg:text-4xl md:max-w-[440px] text-in-brown'
+                        className='text-center md:text-left font-in-playfair text-2xl md:text-3xl lg:text-4xl md:max-w-[440px] text-in-title-base'
                     >Recupera la belleza de tu piel con un procedimiento rápido y seguro.</h3>
                 </div>
-                <div className='space-y-2 md:pt-16 text-center md:text-left text-in-brown-light'>
+                <div className='space-y-2 md:pt-16 text-center md:text-left text-in-brown'>
                     <p>Av. Sánchez Carrión 615, oficina 1005 - Jesús María</p>
                     <p>999 999 999</p>
                     <div className='flex justify-center md:justify-start'>
@@ -28,7 +28,7 @@ export const Footer = () => {
                     </div>
                 </div>
             </div>
-            <div className='md:flex text-center gap-10 text-sm text-in-brown-light'>
+            <div className='md:flex text-center gap-10 text-sm text-in-brown'>
                 <p>Copyright © Inaesthetics 2025</p>
                 <p>Created by Insalud</p>
             </div>

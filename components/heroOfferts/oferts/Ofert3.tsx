@@ -18,7 +18,7 @@ export const Ofert3 = () => {
             src="/images/hero_ofert_3.png"
             width={780}
             height={400}
-            className="absolute -top-10 -right-7"
+            className="absolute -top-10 right-0"
         />
     </article>
   )

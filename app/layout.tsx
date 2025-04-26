@@ -8,7 +8,7 @@ import { Footer } from "@/components/footer/Footer";
 import { ButtonWsp } from "@/components/ui/buttonWsp/ButtonWsp"; 
 import 'swiper/css';
 
-
+  
 const playfair = Playfair_Display({
   variable: "--font-in-playfair",
   subsets: ["latin"],

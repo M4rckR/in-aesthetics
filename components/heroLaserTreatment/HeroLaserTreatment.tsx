@@ -17,7 +17,7 @@ export const HeroLaserTreatment = () => {
         <h2 className="font-in-playfair text-4xl lg:text-6xl">Láser CO2 DEKA</h2>
         <p>Es la solución más avanzada para eliminar lunares, verrugas y acrocordones sin dolor ni marcas. Es un procedimiento rápido, seguro y eficaz, realizado por especialistas en estética avanzada.</p>
         <a className="bg-in-pink rounded-4xl py-3 px-12 block text-in-brown shadow  transition-all duration-150 hover:scale-105 animate-suave-latido" href="#">Agendar cita</a>
-      </div>
+      </div>  
      
     </div>
   )

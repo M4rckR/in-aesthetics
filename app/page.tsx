@@ -1,6 +1,7 @@
 import { Benefits } from '@/components/bennefits/Benefits';
 import { HeroLaserTreatment } from '@/components/heroLaserTreatment/HeroLaserTreatment';
 import { HeroOfferts } from '@/components/heroOfferts/HeroOfferts';
+import { Questions } from '@/components/questions/Questions';
 import 'lenis/dist/lenis.css'
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
       <HeroOfferts/>
       <HeroLaserTreatment/>
       <Benefits/>
+      <Questions/>
     </main>
   );
 }

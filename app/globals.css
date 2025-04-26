@@ -39,3 +39,33 @@ body {
   @apply font-in-poppins
 }
 
+/* Animaciones para el acordeón */
+.accordion-content {
+  overflow: hidden;
+}
+
+.accordion-content[data-state="open"] {
+  animation: accordionSlideDown 300ms ease-out forwards;
+}
+
+.accordion-content[data-state="closed"] {
+  animation: accordionSlideUp 300ms ease-out forwards;
+}
+
+@keyframes accordionSlideDown {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordionSlideUp {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}

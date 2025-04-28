@@ -27,7 +27,7 @@ export const HeroOfferts = () => {
           >
           {[Ofert1, Ofert2, Ofert3].map((Comp, i) => (
           <SwiperSlide key={i} className="w-full">
-            <div className="relative w-full h-[600px]">
+            <div className="">
               <Comp />
             </div>
           </SwiperSlide>

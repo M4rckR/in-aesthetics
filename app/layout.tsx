@@ -1,5 +1,4 @@
 // app/layout.tsx
-
 import type { Metadata } from "next";
 import { Playfair_Display, Poppins } from "next/font/google";
 import "./globals.css";
@@ -7,7 +6,7 @@ import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
 import { ButtonWsp } from "@/components/ui/buttonWsp/ButtonWsp"; 
 import 'swiper/css';
-
+import { ContactForm } from "@/components/contactForm/ContactForm";
   
 const playfair = Playfair_Display({
   variable: "--font-in-playfair",
@@ -38,6 +37,7 @@ export default function RootLayout({
           <ButtonWsp />
           <Header />
           {children}
+          <ContactForm />
           <Footer />
       </body>
     </html>

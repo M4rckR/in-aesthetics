@@ -1,12 +1,14 @@
 // app/layout.tsx
 import type { Metadata } from "next";
 import { Playfair_Display, Poppins } from "next/font/google";
-import "./globals.css";
 import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
 import { ButtonWsp } from "@/components/ui/buttonWsp/ButtonWsp"; 
-import 'swiper/css';
 import { ContactForm } from "@/components/contactForm/ContactForm";
+import 'swiper/css';
+import "./globals.css";
+import 'aos/dist/aos.css'
+import { AOSInit } from "@/components/aosInit/aosInit";
   
 const playfair = Playfair_Display({
   variable: "--font-in-playfair",
@@ -34,6 +36,7 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} ${playfair.variable} antialiased flex flex-col min-h-screen`}
       >
+          <AOSInit />
           <ButtonWsp />
           <Header />
           {children}

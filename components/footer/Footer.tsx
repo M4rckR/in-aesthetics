@@ -21,8 +21,8 @@ export const Footer = () => {
                     >Recupera la belleza de tu piel con un procedimiento rápido y seguro.</h3>
                 </div>
                 <div className='space-y-2 md:pt-16 text-center md:text-left text-in-brown'>
-                    <p>Av. Sánchez Carrión 615, oficina 1005 - Jesús María</p>
-                    <p>999 999 999</p>
+                    <p>Av. Sánchez Carrión 615- Oficina 1002, Jesús María Lima, Perú</p>
+                    <p>974 309 260</p>
                     <div className='flex justify-center md:justify-start'>
                         <Socialbar gap={24} size={28}/>
                     </div>

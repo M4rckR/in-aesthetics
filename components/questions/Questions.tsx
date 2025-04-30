@@ -14,7 +14,7 @@ export const Questions = () => {
 
   return (
     <section className="container mx-auto max-w-[1200px] px-4 my-16 lg:my-32">
-        <h3 className="text-center text-in-title-base font-in-playfair text-3xl md:text-4xl lg:text-5xl mb-10">Preguntas Frecuentes</h3>
+        <h3 className="text-center text-in-title-base font-in-playfair text-4xl md:text-5xl mb-10">Preguntas Frecuentes</h3>
         <Accordion.Root
             type="single"
             collapsible

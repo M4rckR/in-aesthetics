@@ -19,16 +19,17 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { FaRegCalendarAlt } from "react-icons/fa"
 import { IoTimeOutline } from "react-icons/io5"
+import { AddClients } from "@/services/AddClients"
 
 const formSchema = z.object({
-    name: z.string().min(3, { message: "El nombre es requerido" }),
-    email: z.string().email({ message: "Ingrese un correo válido" }),
-    phone: z.string().min(8, { message: "Ingrese un número de teléfono válido" }),
-    date: z.string().min(1, { message: "Seleccione una fecha" }),
-    time: z.string().min(1, { message: "Seleccione una hora" }),
+  nombres: z.string().min(3, { message: "El nombre es requerido" }),
+  correo: z.string().email({ message: "Ingrese un correo válido" }),
+  telefono: z.string().min(8, { message: "Ingrese un número de teléfono válido" }),
+  fecha: z.string().min(1, { message: "Seleccione una fecha" }),
+  hora: z.string().min(1, { message: "Seleccione una hora" }),
 })
 
 type FormValues = z.infer<typeof formSchema>
@@ -37,18 +38,26 @@ export const ContactForm = () => {
     const { isOpen, closeDialog } = useInhaesteticsData();
     const formRef = useRef<HTMLFormElement>(null);
     const dialogRef = useRef<HTMLDivElement>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState<{
+        success: boolean;
+        message: string;
+    } | null>(null);
     
     const form = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            name: "",
-            email: "",
-            phone: "",
-            date: "",
-            time: "",
+            nombres: "",
+            correo: "",
+            telefono: "",
+            fecha: "",
+            hora: "",
         },
     });
-
+    
+    // Reference to watch date value
+    const watchDate = form.watch("fecha");
+    
     // Handle keyboard visibility to ensure fields remain visible
     useEffect(() => {
         if (!isOpen) return;
@@ -97,10 +106,50 @@ export const ContactForm = () => {
         };
     }, [isOpen]);
 
-    const onSubmit = (data: FormValues) => {
-        console.log(data);
-        // Aquí puedes agregar la lógica para enviar los datos
-        // closeDialog(); // Opcional: cerrar el diálogo después de enviar
+    // Reset form and state when dialog closes
+    useEffect(() => {
+        if (!isOpen) {
+            setSubmitStatus(null);
+            form.reset();
+        }
+    }, [isOpen, form]);
+
+    const onSubmit = async (data: FormValues) => {
+        try {
+            setIsSubmitting(true);
+            setSubmitStatus(null);
+            
+            // Map form values to match the Client schema structure
+            const clientData = {
+                nombres: data.nombres,
+                correo: data.correo,
+                telefono: data.telefono,
+                fecha: data.fecha,
+                hora: data.hora
+            };
+            
+            await AddClients(clientData);
+            
+            // Show success message
+            setSubmitStatus({
+                success: true,
+                message: "¡Cita reservada con éxito! Te contactaremos pronto."
+            });
+            
+            // Close dialog after showing success message
+            setTimeout(() => {
+                closeDialog();
+            }, 3000);
+            
+        } catch (error) {
+            console.error("Error al enviar formulario:", error);
+            setSubmitStatus({
+                success: false,
+                message: "No se pudo reservar la cita. Por favor, intenta nuevamente."
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -114,11 +163,23 @@ export const ContactForm = () => {
                 <DialogTitle>¡Reserva tu cita!</DialogTitle>
               </VisuallyHidden>
             </DialogHeader>
+            
+            {/* Show status message if available */}
+            {submitStatus && (
+              <div className={`mb-4 p-3 rounded text-center ${
+                submitStatus.success 
+                  ? "bg-green-100 text-green-800 border border-green-200" 
+                  : "bg-red-100 text-red-800 border border-red-200"
+              }`}>
+                {submitStatus.message}
+              </div>
+            )}
+            
             <Form {...form}>
               <form ref={formRef} onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4 md:gap-4 py-4">
                 <FormField
                   control={form.control}
-                  name="name"
+                  name="nombres"
                   render={({ field }) => (
                     <FormItem className="form-item">
                       <FormControl>
@@ -136,7 +197,7 @@ export const ContactForm = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-4">
                   <FormField
                     control={form.control}
-                    name="email"
+                    name="correo"
                     render={({ field }) => (
                       <FormItem className="form-item">
                         <FormControl>
@@ -152,14 +213,20 @@ export const ContactForm = () => {
                   />
                   <FormField
                     control={form.control}
-                    name="phone"
+                    name="telefono"
                     render={({ field }) => (
                       <FormItem className="form-item">
                         <FormControl>
                           <Input 
+                            maxLength={9}
                             type="tel"
                             placeholder="Teléfono" 
-                            className="border-in-blue-base py-6 placeholder:text-base" 
+                            className="border-in-blue-base py-6 placeholder:text-base"
+                            onInput={(e) => {
+                              const input = e.currentTarget;
+                              input.value = input.value.replace(/[^0-9]/g, '');
+                              field.onChange(input.value);
+                            }}
                             {...field} 
                           />
                         </FormControl>
@@ -172,20 +239,33 @@ export const ContactForm = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-4">
                   <FormField
                     control={form.control}
-                    name="date"
+                    name="fecha"
                     render={({ field }) => (
                       <FormItem className="form-item">
                         <FormControl>
                           <div className="relative">
-                            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-in-blue-base">
+                            <div className="md:hidden absolute right-3 top-1/2 transform -translate-y-1/2 text-in-blue-base">
                               <FaRegCalendarAlt size={20} className="text-in-orange-base" />
                             </div>
                             <Input 
                               type="date"
+                              min={new Date().toISOString().split('T')[0]}
                               className="border-in-blue-base py-6 pl-3 placeholder:text-base" 
                               {...field} 
+                              onChange={(e) => {
+                                const selectedDate = e.target.value;
+                                const today = new Date().toISOString().split('T')[0];
+                                
+                                // Prevent selecting dates before today
+                                if (selectedDate < today) {
+                                  field.onChange(today);
+                                  return;
+                                }
+                                
+                                field.onChange(selectedDate);
+                              }}
                             />
-                            <span className="absolute text-base  text-in-title-base/80 left-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                            <span className="md:hidden absolute text-base text-in-title-base/80 left-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
                               {!field.value && "Fecha"}
                             </span>
                           </div>
@@ -196,20 +276,39 @@ export const ContactForm = () => {
                   />
                   <FormField
                     control={form.control}
-                    name="time"
+                    name="hora"
                     render={({ field }) => (
                       <FormItem className="form-item">
                         <FormControl>
                           <div className="relative">
-                            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-in-blue-base">
+                            <div className="md:hidden absolute right-6 top-1/2 transform -translate-y-1/2 text-in-blue-base">
                               <IoTimeOutline size={20} className="text-in-orange-base" />
                             </div>
                             <Input 
                               type="time"
-                              className="border-in-blue-base py-6 pl-3 placeholder:text-base" 
-                              {...field} 
+                              className="border-in-blue-base py-6 pl-3 placeholder:text-base"
+                              min={watchDate === new Date().toISOString().split('T')[0] ? 
+                                new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }) : 
+                                undefined}
+                              {...field}
+                              onChange={(e) => {
+                                const selectedTime = e.target.value;
+                                const today = new Date().toISOString().split('T')[0];
+                                
+                                // If date is today, validate that time is not in the past
+                                if (watchDate === today) {
+                                  const currentTime = new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+                                  if (selectedTime < currentTime) {
+                                    // Reset to current time if selected time is in the past
+                                    field.onChange(currentTime);
+                                    return;
+                                  }
+                                }
+                                
+                                field.onChange(selectedTime);
+                              }}
                             />
-                            <span className="absolute text-base  text-in-title-base/80 left-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                            <span className="md:hidden absolute text-base text-in-title-base/80 left-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
                               {!field.value && "Horario"}
                             </span>
                           </div>
@@ -221,9 +320,10 @@ export const ContactForm = () => {
                 </div>
                 <button 
                   type="submit" 
-                  className="bg-in-brown transition-all duration-300 hover:bg-in-brown/80 text-white py-3 px-12 block text-center rounded-4xl w-full cursor-pointer mt-4"
+                  disabled={isSubmitting}
+                  className="bg-in-brown transition-all duration-300 hover:bg-in-brown/80 text-white py-3 px-12 block text-center rounded-4xl w-full cursor-pointer mt-4 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  ¡Reserva tu cita ahora!
+                  {isSubmitting ? "Enviando..." : "¡Reserva tu cita ahora!"}
                 </button>
               </form>
             </Form>

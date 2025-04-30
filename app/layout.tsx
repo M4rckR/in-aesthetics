@@ -6,6 +6,7 @@ import { Footer } from "@/components/footer/Footer";
 import { ButtonWsp } from "@/components/ui/buttonWsp/ButtonWsp"; 
 import { ContactForm } from "@/components/contactForm/ContactForm";
 import 'swiper/css';
+import "swiper/css/effect-fade";
 import "./globals.css";
 import 'aos/dist/aos.css'
 import { AOSInit } from "@/components/aosInit/aosInit";
@@ -24,6 +25,9 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Inaesthetics | Estética Natural y Bienestar en Lima",
   description: "Tratamientos estéticos seguros y naturales en Inaesthetics. Técnicas no invasivas con equipo médico especializado. Belleza y bienestar en un solo lugar.",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({

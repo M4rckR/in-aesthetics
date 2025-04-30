@@ -16,7 +16,7 @@ export const Header = () => {
                     // placeholder="blur"
                 />
                 <Socialbar 
-                  size={24} 
+                  size={22} 
                   gap={24}
                 />
             </div>
